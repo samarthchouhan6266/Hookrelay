@@ -24,9 +24,9 @@ describe("health endpoints", () => {
 describe("users table", () => {
   it("rejects duplicate emails at the database level", async () => {
     const email = `dup-${Date.now()}@example.com`;
-    await prisma.user.create({ data: { email } });
+    await prisma.user.create({ data:{ email, passwordHash: "placeholder" }});
 
-    await expect(prisma.user.create({ data: { email } })).rejects.toMatchObject(
+    await expect(prisma.user.create({ data:{ email, passwordHash: "placeholder" } })).rejects.toMatchObject(
       { code: "P2002" },
     );
   });
